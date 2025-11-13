@@ -3,7 +3,7 @@ name: Preprocess dataset
 on:
   push:
     paths:
-      - "automate_Zulfi-Fadilah-Azhar.py"
+      - "preprocessing/automate_Zulfi-Fadilah-Azhar.py"
       - "preprocessing/**"
       - "requirements.txt"
       - "Credit Score Classification Dataset_raw.csv"
@@ -47,7 +47,7 @@ jobs:
 
       - name: Run automate_Zulfi-Fadilah-Azhar.py
         run: |
-          python automate_Zulfi-Fadilah-Azhar.py \
+          python preprocessing/automate_Zulfi-Fadilah-Azhar.py \
             --input "${{ env.INPUT_PATH }}" \
             --output "${{ env.OUTPUT_PATH }}" \
             --target "${{ env.TARGET_COL }}"
