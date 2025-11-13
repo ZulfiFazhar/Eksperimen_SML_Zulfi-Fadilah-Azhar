@@ -9,6 +9,9 @@ on:
       - "Credit Score Classification Dataset_raw.csv"
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 env:
   PYTHON_VERSION: "3.12.7"
   INPUT_PATH: "Credit Score Classification Dataset_raw.csv"
@@ -58,3 +61,16 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add "${{ env.OUTPUT_PATH }}"
           git diff --staged --quiet || git commit -m "chore: update preprocessed dataset [skip ci]"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dataset-preprocessed
+          path: |
+            ${{ env.OUTPUT_PATH }}
