@@ -52,9 +52,9 @@ jobs:
             --output "${{ env.OUTPUT_PATH }}" \
             --target "${{ env.TARGET_COL }}"
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: dataset-preprocessed
-          path: |
-            ${{ env.OUTPUT_PATH }}
+      - name: Commit preprocessed dataset
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add "${{ env.OUTPUT_PATH }}"
+          git diff --staged --quiet || git commit -m "chore: update preprocessed dataset [skip ci]"
